@@ -631,6 +631,37 @@
         lucide.createIcons();
 
         /* ==========================================================
+           AUTO-LOAD & PLAY BIRTHDAY TRIBUTE VIDEO
+           ========================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            const tributeVid = document.getElementById('tribute-video');
+            if (!tributeVid) return;
+        
+            // Ensure source and visibility
+            tributeVid.classList.remove('hidden');
+        
+            // Attempt direct autoplay
+            const playPromise = tributeVid.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // If the browser blocks playback with audio, mute and re-trigger immediately
+                    tributeVid.muted = true;
+                    tributeVid.play();
+                });
+            }
+        
+            // Unmute as soon as the user touches or clicks anywhere on the page
+            const enableSoundOnInteraction = () => {
+                tributeVid.muted = false;
+                window.removeEventListener('click', enableSoundOnInteraction);
+                window.removeEventListener('touchstart', enableSoundOnInteraction);
+            };
+        
+            window.addEventListener('click', enableSoundOnInteraction, { once: true });
+            window.addEventListener('touchstart', enableSoundOnInteraction, { once: true });
+        });
+
+        /* ==========================================================
            1. PHOTO MEMORIES CAROUSEL DATA (Matching uploaded files)
            ========================================================== */
         const photoMemories = [
