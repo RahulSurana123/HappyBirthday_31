@@ -133,7 +133,7 @@
 
     <!-- Floating Background Audio Bar -->
     <aside aria-label="Music player controller" class="fixed bottom-6 right-5 sm:right-8 z-40 flex items-center gap-3 glass-card px-4 py-2.5 rounded-full shadow-2xl border border-roseGold-300">
-        <button id="audio-toggle-btn" class="w-11 h-11 rounded-full bg-gradient-to-r from-roseGold-500 to-wine text-white flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg focus:outline-none" title="Play romantic ambient melody">
+        <button id="audio-toggle-btn" class="w-11 h-11 rounded-full bg-gradient-to-r from-roseGold-500 to-wine text-white flex items-center justify-center hover:scale-105 active:scale-95 transition">
             <i data-lucide="music" id="music-icon" class="w-5 h-5"></i>
         </button>
         <div class="hidden sm:flex flex-col pr-2">
@@ -218,11 +218,11 @@
 
             <!-- Quick Action CTA -->
             <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="#memories" class="px-6 py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                <a href="#memories" class="px-6 py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition">
                     <i data-lucide="images" class="w-4 h-4"></i>
                     <span>Relive Our Memories</span>
                 </a>
-                <button onclick="triggerConfettiExplosion()" class="px-6 py-3 rounded-full bg-white text-roseGold-700 font-medium border border-roseGold-300 hover:bg-roseGold-50 shadow hover:shadow-md hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                <button onclick="triggerConfettiExplosion()" class="px-6 py-3 rounded-full bg-white text-roseGold-700 font-medium border border-roseGold-300 hover:bg-roseGold-50 shadow hover:shadow-md transition">
                     <i data-lucide="party-popper" class="w-4 h-4 text-roseGold-500"></i>
                     <span>Shower With Confetti</span>
                 </button>
@@ -261,15 +261,15 @@
                         </div>
 
                         <!-- Previous / Next Navigation Arrows -->
-                        <button onclick="prevSlide()" aria-label="Previous Memory" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition opacity-90 hover:scale-110 active:scale-95 focus:outline-none">
+                        <button onclick="prevSlide()" aria-label="Previous Memory" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition">
                             <i data-lucide="chevron-left" class="w-6 h-6"></i>
                         </button>
-                        <button onclick="nextSlide()" aria-label="Next Memory" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition opacity-90 hover:scale-110 active:scale-95 focus:outline-none">
+                        <button onclick="nextSlide()" aria-label="Next Memory" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition">
                             <i data-lucide="chevron-right" class="w-6 h-6"></i>
                         </button>
 
                         <!-- Autoplay toggle badge -->
-                        <button id="autoplay-toggle" onclick="toggleAutoPlay()" class="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-xs flex items-center gap-1.5 transition">
+                        <button id="autoplay-toggle" onclick="toggleAutoPlay()" class="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-xs font-medium flex items-center gap-1.5 transition">
                             <i data-lucide="pause" id="autoplay-icon" class="w-3.5 h-3.5"></i>
                             <span id="autoplay-label">Auto: On</span>
                         </button>
@@ -295,8 +295,6 @@
 
                 <!-- Grid of Interactive Flip Love Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                    
-                    <!-- Card 1 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -324,7 +322,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -352,7 +349,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -380,7 +376,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -408,7 +403,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 5 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -436,7 +430,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 6 -->
                     <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
                         <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
                             <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
@@ -463,7 +456,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -479,8 +471,6 @@
                 </div>
 
                 <div class="relative border-l-2 border-roseGold-300 ml-4 sm:ml-32 space-y-12">
-                    
-                    <!-- Timeline Item 1 -->
                     <div class="relative pl-6 sm:pl-10">
                         <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-500 border-4 border-white shadow"></div>
                         <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">The First Spark</span>
@@ -490,7 +480,6 @@
                         </p>
                     </div>
 
-                    <!-- Timeline Item 2 -->
                     <div class="relative pl-6 sm:pl-10">
                         <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-500 border-4 border-white shadow"></div>
                         <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">Unforgettable Dates</span>
@@ -500,7 +489,6 @@
                         </p>
                     </div>
 
-                    <!-- Timeline Item 3 -->
                     <div class="relative pl-6 sm:pl-10">
                         <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-600 border-4 border-white shadow"></div>
                         <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">Today & Forever</span>
@@ -509,7 +497,6 @@
                             Today is dedicated entirely to your smile, your dreams, and reminding you that you are deeply, unconditionally loved.
                         </p>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -527,24 +514,22 @@
                 <!-- Video Card Frame -->
                 <div class="glass-card rounded-3xl p-4 sm:p-7 shadow-2xl border border-roseGold-300">
                     <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-stone-900 shadow-inner flex items-center justify-center">
-                        
-                        <!-- Primary HTML5 Video Tag (easily replaceable with user's video.mp4 or YouTube embed) -->
-                        <video id="tribute-video" class="w-full h-full object-cover hidden" controls playsinline>
-                            <source src="birthday_tribute.mp4" type="video/mp4">
+                        <!-- Primary HTML5 Video Tag -->
+                        <video id="tribute-video" class="w-full h-full object-cover hidden" controls playsinline preload="metadata" src="birthday_tribute.mp4">
                             Your browser does not support the video tag.
                         </video>
 
                         <!-- Fallback / Interactive Video Placeholder Poster -->
                         <div id="video-placeholder" class="text-center p-6 sm:p-10 flex flex-col items-center justify-center text-white">
-                            <div class="w-20 h-20 rounded-full bg-roseGold-500/30 border border-roseGold-400/50 flex items-center justify-center mb-5 backdrop-blur-sm animate-pulseSlow cursor-pointer" onclick="openVideoFileSelector()">
+                            <div class="w-20 h-20 rounded-full bg-roseGold-500/30 border border-roseGold-400/50 flex items-center justify-center mb-5 backdrop-blur-sm animate-pulseSlow cursor-pointer" onclick="playRomanticChimeNote()">
                                 <i data-lucide="play" class="w-8 h-8 text-roseGold-200 fill-roseGold-200 translate-x-0.5"></i>
                             </div>
                             <h3 class="font-serif text-2xl sm:text-3xl font-bold mb-2">Our Video Premiere</h3>
                             <p class="text-stone-300 text-xs sm:text-sm max-w-md leading-relaxed mb-6 font-light">
-                                To play your video, place a file named <code class="bg-black/50 px-2 py-0.5 rounded text-roseGold-300 font-mono">birthday_tribute.mp4</code> in the repository, or load one from your device right now!
+                                Your tribute video is already loaded from <code class="bg-black/50 px-2 py-0.5 rounded text-roseGold-300 font-mono">birthday_tribute.mp4</code>.
                             </p>
                             <div class="flex flex-wrap gap-3 justify-center">
-                                <label class="px-5 py-2.5 rounded-full bg-roseGold-500 hover:bg-roseGold-600 text-white text-xs sm:text-sm font-medium transition cursor-pointer flex items-center gap-2 shadow-lg">
+                                <label class="px-5 py-2.5 rounded-full bg-roseGold-500 hover:bg-roseGold-600 text-white text-xs sm:text-sm font-medium transition cursor-pointer flex items-center gap-2">
                                     <i data-lucide="upload" class="w-4 h-4"></i>
                                     <span>Select Local Video</span>
                                     <input type="file" id="local-video-input" accept="video/*" class="hidden" onchange="loadLocalVideo(event)">
@@ -584,7 +569,7 @@
                 <p class="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 font-serif italic">
                     I prepared a secret letter just for you. Click below to unwrap your special birthday gift card.
                 </p>
-                <button onclick="triggerSurpriseModal()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-roseGold-500 via-roseGold-600 to-wine text-white font-medium text-base shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition flex items-center gap-2 mx-auto">
+                <button onclick="triggerSurpriseModal()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-roseGold-500 via-roseGold-600 to-wine text-white font-medium text-base shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition flex items-center justify-center gap-3 mx-auto">
                     <i data-lucide="sparkles" class="w-5 h-5 text-champagne"></i>
                     <span>Open My Birthday Letter</span>
                 </button>
@@ -603,11 +588,11 @@
                 <h3 class="font-serif text-2xl font-bold text-wine">How to Host on GitHub Pages</h3>
             </div>
             <div class="text-xs sm:text-sm text-stone-700 space-y-3 leading-relaxed">
-                <p>Follow these 3 quick steps to give your wife her custom live URL (e.g., <span class="font-mono bg-roseGold-100 px-1 py-0.5 rounded text-roseGold-800">yourname.github.io/happy-birthday</span>):</p>
+                <p>Follow these 3 quick steps to give your wife her custom live URL (e.g., <span class="font-mono bg-roseGold-100 px-1 py-0.5 rounded text-roseGold-800">yourname.github.io/happy-birthday</span>).</p>
                 <ol class="list-decimal pl-5 space-y-2 text-stone-600 font-normal">
-                    <li><strong>Create a GitHub Repository:</strong> Sign in to GitHub, click <em>New Repository</em>, name it (e.g. <code class="text-roseGold-700">happy-birthday</code>) and set it to <strong>Public</strong>.</li>
-                    <li><strong>Upload Your Files:</strong> Upload this <code class="text-roseGold-700">index.html</code> file along with the photo files (<code class="text-roseGold-700">PXL_20261002_092805851.jpg</code>, etc.) into the repository's root folder.</li>
-                    <li><strong>Turn on GitHub Pages:</strong> Go to <strong>Settings</strong> &rarr; <strong>Pages</strong> (on left sidebar) &rarr; under <em>Branch</em> select <strong>main</strong> (or master) and root (<code class="text-roseGold-700">/root</code>) &rarr; Click <strong>Save</strong>.</li>
+                    <li><strong>Create a GitHub Repository:</strong> Sign in to GitHub, click <em>New Repository</em>, name it (e.g. <code class="text-roseGold-700">happy-birthday</code>) and set it to public.</li>
+                    <li><strong>Upload Your Files:</strong> Upload this <code class="text-roseGold-700">index.html</code> file along with the photo files (<code class="text-roseGold-700">PXL_2026...</code>) and video file <code class="text-roseGold-700">birthday_tribute.mp4</code>.</li>
+                    <li><strong>Turn on GitHub Pages:</strong> Go to <strong>Settings</strong> &rarr; <strong>Pages</strong> (on left sidebar) &rarr; under <em>Branch</em> select <strong>main</strong> and click <strong>Save</strong>.</li>
                 </ol>
                 <p class="text-roseGold-800 font-medium pt-2">Within 1-2 minutes, GitHub will publish your live romantic website link to share with her!</p>
             </div>
@@ -629,7 +614,7 @@
             <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-widest">My Personal Vow</span>
             <h3 class="font-script text-4xl sm:text-5xl text-wine mt-2 mb-4">Forever My Only One</h3>
             <p class="font-serif italic text-stone-700 text-sm sm:text-base leading-relaxed mb-6">
-                "Happy Birthday, my beautiful wife. Meeting you was fate, becoming your husband was a dream, and loving you through every season is the joy of my existence. May your year ahead be as breathtaking, loving, and radiant as you are."
+                "Happy Birthday, my beautiful wife. Meeting you was fate, becoming your husband was a dream, and loving you through every season is the joy of my existence. May your year ahead be as beautiful as your smile and as peaceful as your heart."
             </p>
             <div class="p-4 rounded-2xl bg-roseGold-100/70 border border-roseGold-300 mb-6 text-left">
                 <div class="flex items-center gap-2 text-wine font-semibold text-xs uppercase mb-1">
@@ -640,7 +625,7 @@
                     Redeemable anytime for: 100 Unlimited Hugs, Breakfast in Bed, Your Favorite Street Food date, and unconditional pampering! ❤️
                 </p>
             </div>
-            <button onclick="closeSurpriseModal(); triggerConfettiExplosion(); playSweetChime();" class="w-full py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium hover:shadow-lg transition">
+            <button onclick="closeSurpriseModal(); triggerConfettiExplosion(); playSweetChime();" class="w-full py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium hover:opacity-90 transition">
                 Seal With A Kiss 💋
             </button>
         </div>
@@ -746,7 +731,6 @@
         const tagElement = document.getElementById('carousel-tag');
         const dotsContainer = document.getElementById('carousel-dots');
 
-        // Build dots for slides
         function renderDots() {
             dotsContainer.innerHTML = '';
             photoMemories.forEach((_, index) => {
@@ -812,14 +796,12 @@
             }, 5500);
         }
 
-        // Initialize Carousel
         renderDots();
         startCarouselInterval();
 
         /* ==========================================================
            2. BIRTHDAY COUNTDOWN TIMER WITH LOCALSTORAGE PERSISTENCE
            ========================================================== */
-        // Default target birthday: 10 days ahead or editable by user
         let storedDate = localStorage.getItem('wife_birthday_date');
         let targetBirthday = new Date("2026-10-11T23:59:00");
 
@@ -828,7 +810,6 @@
             const distance = targetBirthday.getTime() - now;
 
             if (distance < 0) {
-                // Birthday is here!
                 document.getElementById('days').innerText = "00";
                 document.getElementById('hours').innerText = "00";
                 document.getElementById('minutes').innerText = "00";
@@ -850,7 +831,6 @@
         }
 
         function promptEditDate() {
-            // Using in-page custom date prompt to avoid alert/confirm
             const customDateInput = prompt("Enter birthday date (YYYY-MM-DD):", targetBirthday.toISOString().split('T')[0]);
             if (customDateInput) {
                 const parsed = new Date(customDateInput + "T00:00:00");
@@ -873,35 +853,33 @@
         let isMusicPlaying = false;
         let melodyTimeout = null;
 
-        // Romantic pentatonic acoustic-like melody notes (frequencies in Hz)
         const romanticNotes = [
-            261.63, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63, // C4, E4, G4, A4, C5...
-            293.66, 349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23, // D4, F4, A4, C5, D5...
-            329.63, 392.00, 493.88, 523.25, 659.25, 523.25, 493.88, 392.00  // E4, G4, B4, C5, E5...
+            261.63, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63,
+            293.66, 349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23,
+            329.63, 392.00, 493.88, 523.25, 659.25, 523.25, 493.88, 392.00
         ];
         let noteIndex = 0;
 
         function playRomanticChimeNote(freq, duration = 0.9) {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+            const video = document.getElementById('tribute-video');
+            const placeholder = document.getElementById('video-placeholder');
+            if (!video) return;
 
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            if (!video.src || !video.src.includes('birthday_tribute.mp4')) {
+                video.setAttribute('src', 'birthday_tribute.mp4');
+                video.load();
+            }
 
-                // Smooth bell/music box envelope
-                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            video.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
 
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch (e) {
-                console.error("Audio note error:", e);
+            if (video.paused) {
+                video.play().catch(() => {
+                    if (placeholder) placeholder.classList.remove('hidden');
+                    video.classList.add('hidden');
+                });
+            } else {
+                video.pause();
             }
         }
 
@@ -917,10 +895,7 @@
             const freq = romanticNotes[noteIndex % romanticNotes.length];
             playRomanticChimeNote(freq, 1.1);
             noteIndex++;
-
-            // Animate visualizer bars
             animateVisualizer();
-
             melodyTimeout = setTimeout(scheduleMelodyLoop, 550);
         }
 
@@ -998,141 +973,116 @@
                 this.y += this.speedY;
                 this.x += this.speedX + Math.sin(this.y * 0.01) * 0.4;
                 this.rotation += this.rotationSpeed;
-                if (this.y > canvas.height + 30) {
-                    this.reset();
-                }
             }
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation);
                 ctx.globalAlpha = this.opacity;
-                
                 if (this.isHeart) {
-                    ctx.fillStyle = '#e48a9b';
+                    ctx.fillStyle = '#f4a7b9';
                     ctx.beginPath();
-                    const d = this.size / 2;
-                    ctx.moveTo(0, 0);
-                    ctx.bezierCurveTo(-d / 2, -d / 2, -d, d / 3, 0, d);
-                    ctx.bezierCurveTo(d, d / 3, d / 2, -d / 2, 0, 0);
+                    ctx.moveTo(0, 5);
+                    ctx.bezierCurveTo(0, -10, -12, -12, -12, -4);
+                    ctx.bezierCurveTo(-12, 8, 0, 16, 0, 18);
+                    ctx.bezierCurveTo(0, 16, 12, 8, 12, -4);
+                    ctx.bezierCurveTo(12, -12, 0, -10, 0, 5);
                     ctx.fill();
                 } else {
-                    // Rose Petal shape
-                    ctx.fillStyle = '#f0b7c0';
+                    ctx.fillStyle = '#fff5f8';
                     ctx.beginPath();
-                    ctx.ellipse(0, 0, this.size * 0.6, this.size * 0.35, 0, 0, Math.PI * 2);
+                    ctx.arc(0, 0, this.size * 0.42, 0, Math.PI * 2);
                     ctx.fill();
                 }
                 ctx.restore();
             }
         }
 
-        // Initialize particles
-        const particleCount = window.innerWidth < 640 ? 18 : 35;
-        for (let i = 0; i < particleCount; i++) {
-            const p = new Particle();
-            p.y = Math.random() * canvas.height; // distribute initially
-            particles.push(p);
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < 70; i++) {
+                particles.push(new Particle());
+            }
         }
 
-        function animateCanvas() {
+        function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            requestAnimationFrame(animateCanvas);
+            particles.forEach((particle) => {
+                particle.update();
+                if (particle.y > canvas.height + 40) {
+                    particle.reset();
+                    particle.y = -10;
+                }
+                particle.draw();
+            });
+            requestAnimationFrame(drawParticles);
         }
-        animateCanvas();
 
-        /* ==========================================================
-           5. INTERACTIVE CONFETTI & CELEBRATION EFFECTS
-           ========================================================== */
+        createParticles();
+        drawParticles();
+
         function triggerConfettiExplosion() {
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 80,
-                    spread: 80,
-                    origin: { y: 0.6 },
-                    colors: ['#e48a9b', '#d56077', '#F7E7CE', '#a03148']
-                });
-            }
+            confetti({
+                particleCount: 150,
+                spread: 120,
+                startVelocity: 40,
+                origin: { y: 0.45 },
+                colors: ['#f9a8d4', '#f59e0b', '#f472b6', '#fbcfe8', '#fca5a5', '#fde68a']
+            });
         }
 
-        /* ==========================================================
-           6. VIDEO PLAYER & FILE HANDLING
-           ========================================================== */
-        const videoElement = document.getElementById('tribute-video');
-        const videoPlaceholder = document.getElementById('video-placeholder');
-        const youtubeContainer = document.getElementById('youtube-container');
+        function toggleGithubModal() {
+            const modal = document.getElementById('github-modal');
+            modal.classList.toggle('hidden');
+        }
 
-        function openVideoFileSelector() {
-            document.getElementById('local-video-input').click();
+        function triggerSurpriseModal() {
+            document.getElementById('surprise-modal').classList.remove('hidden');
+        }
+
+        function closeSurpriseModal() {
+            document.getElementById('surprise-modal').classList.add('hidden');
         }
 
         function loadLocalVideo(event) {
             const file = event.target.files[0];
-            if (file) {
-                const fileURL = URL.createObjectURL(file);
-                videoElement.src = fileURL;
-                videoElement.classList.remove('hidden');
-                videoPlaceholder.classList.add('hidden');
-                youtubeContainer.classList.add('hidden');
-                videoElement.play();
-                triggerConfettiExplosion();
-            }
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            const video = document.getElementById('tribute-video');
+            const placeholder = document.getElementById('video-placeholder');
+            video.src = url;
+            video.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            video.play();
         }
 
         function embedYoutubeVideoPrompt() {
-            const url = prompt("Enter YouTube Video URL or Video ID (e.g., https://youtu.be/xxxx):");
-            if (url) {
-                let videoId = "";
-                if (url.includes("v=")) {
-                    videoId = url.split("v=")[1].split("&")[0];
-                } else if (url.includes("youtu.be/")) {
-                    videoId = url.split("youtu.be/")[1].split("?")[0];
-                } else {
-                    videoId = url.trim();
-                }
+            const youtubeLink = prompt('Paste a YouTube video URL:', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+            if (!youtubeLink) return;
 
-                if (videoId) {
-                    youtubeContainer.innerHTML = `<iframe class="w-full h-full rounded-2xl" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                    youtubeContainer.classList.remove('hidden');
-                    videoPlaceholder.classList.add('hidden');
-                    videoElement.classList.add('hidden');
-                    triggerConfettiExplosion();
-                }
+            const videoIdMatch = youtubeLink.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+            if (!videoIdMatch) {
+                alert('Please enter a valid YouTube URL.');
+                return;
             }
+
+            const videoId = videoIdMatch[1];
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.className = 'w-full h-full';
+            iframe.allow = 'autoplay; encrypted-media';
+            iframe.allowFullscreen = true;
+
+            const container = document.getElementById('youtube-container');
+            const video = document.getElementById('tribute-video');
+            const placeholder = document.getElementById('video-placeholder');
+
+            container.innerHTML = '';
+            container.appendChild(iframe);
+            container.classList.remove('hidden');
+            video.classList.add('hidden');
+            placeholder.classList.add('hidden');
         }
-
-        /* ==========================================================
-           7. MODAL CONTROLLERS
-           ========================================================== */
-        const surpriseModal = document.getElementById('surprise-modal');
-        const githubModal = document.getElementById('github-modal');
-
-        function triggerSurpriseModal() {
-            surpriseModal.classList.remove('hidden');
-            triggerConfettiExplosion();
-            playSweetChime();
-        }
-
-        function closeSurpriseModal() {
-            surpriseModal.classList.add('hidden');
-        }
-
-        function toggleGithubModal() {
-            githubModal.classList.toggle('hidden');
-        }
-
-        // Close on clicking outside modal
-        [surpriseModal, githubModal].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-        });
     </script>
 </body>
 </html>
