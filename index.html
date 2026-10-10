@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Beloved Wife ❤️</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: {
+                            50: '#fdf6f6',
+                            100: '#fbebed',
+                            200: '#f7d8dc',
+                            300: '#f0b7c0',
+                            400: '#e48a9b',
+                            500: '#d56077',
+                            600: '#be415b',
+                            700: '#a03148',
+                            800: '#862b3f',
+                            900: '#722839',
+                        },
+                        champagne: '#F7E7CE',
+                        wine: '#561023',
+                        softPink: '#FFF0F5'
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(4deg)' },
+                        },
+                        heartPulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.12)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 5s ease-in-out infinite',
+                        pulseSlow: 'heartPulse 2.4s ease-in-out infinite',
+                        shimmer: 'shimmer 3s infinite linear'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Floating background petals and particles */
+        #hearts-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-card-dark {
+            background: rgba(43, 11, 22, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(240, 183, 192, 0.25);
+        }
+
+        /* 3D Flip Card Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbebed;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e48a9b;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #be415b;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-[#FFF5F7] via-[#FFF9FA] to-[#FCEEF2] text-stone-800 font-sans antialiased overflow-x-hidden selection:bg-roseGold-400 selection:text-white">
+
+    <!-- Floating Petals Canvas -->
+    <canvas id="hearts-canvas"></canvas>
+
+    <!-- Floating Background Audio Bar -->
+    <aside aria-label="Music player controller" class="fixed bottom-6 right-5 sm:right-8 z-40 flex items-center gap-3 glass-card px-4 py-2.5 rounded-full shadow-2xl border border-roseGold-300">
+        <button id="audio-toggle-btn" class="w-11 h-11 rounded-full bg-gradient-to-r from-roseGold-500 to-wine text-white flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg focus:outline-none" title="Play romantic ambient melody">
+            <i data-lucide="music" id="music-icon" class="w-5 h-5"></i>
+        </button>
+        <div class="hidden sm:flex flex-col pr-2">
+            <span class="text-xs font-semibold text-roseGold-900 tracking-wide uppercase">Love Theme Melody</span>
+            <span id="audio-status-text" class="text-[11px] text-roseGold-600 font-serif italic">Tap to play tune 🎵</span>
+        </div>
+        <div id="visualizer-bars" class="flex items-end gap-1 h-5 px-1 opacity-40">
+            <div class="w-1 bg-roseGold-500 rounded-full h-2 transition-all duration-150 bar-1"></div>
+            <div class="w-1 bg-roseGold-600 rounded-full h-4 transition-all duration-150 bar-2"></div>
+            <div class="w-1 bg-roseGold-400 rounded-full h-3 transition-all duration-150 bar-3"></div>
+            <div class="w-1 bg-roseGold-700 rounded-full h-5 transition-all duration-150 bar-4"></div>
+        </div>
+    </aside>
+
+    <nav class="sticky top-0 z-30 glass-card border-b border-roseGold-200/50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+            <a href="#" class="font-script text-2xl sm:text-3xl text-roseGold-700 hover:text-wine transition flex items-center gap-2">
+                <span>Forever Yours</span>
+                <i data-lucide="heart" class="w-5 h-5 fill-roseGold-500 text-roseGold-500 inline-block animate-pulse"></i>
+            </a>
+            <div class="flex items-center gap-4 text-xs sm:text-sm font-medium text-stone-700">
+                <a href="#memories" class="hover:text-roseGold-600 transition">Memories</a>
+                <a href="#reasons" class="hover:text-roseGold-600 transition">Love Notes</a>
+                <a href="#video-tribute" class="hover:text-roseGold-600 transition">Video</a>
+                <button onclick="triggerSurpriseModal()" class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-roseGold-500 to-wine text-white font-medium hover:shadow-md hover:scale-105 active:scale-95 transition">
+                    Surprise 🎁
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-12 pb-20 sm:pt-20 sm:pb-32 px-4 sm:px-6 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-20">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-roseGold-100 border border-roseGold-300 text-roseGold-800 text-xs sm:text-sm mb-6 animate-float">
+                <i data-lucide="sparkles" class="w-4 h-4 text-roseGold-500"></i>
+                <span class="tracking-wide uppercase font-semibold">Celebrating The Queen of My Heart</span>
+            </div>
+
+            <h1 class="font-script text-5xl sm:text-7xl lg:text-8xl text-wine mb-4 tracking-tight leading-none drop-shadow-sm">
+                Happy Birthday, My Love
+            </h1>
+            <p class="font-serif italic text-lg sm:text-2xl text-stone-700 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+                "In your eyes, I found my home. In your laughter, I found my joy. Every second with you is a gift."
+            </p>
+
+            <!-- Birthday Countdown Timer -->
+            <div class="glass-card max-w-xl mx-auto rounded-3xl p-6 sm:p-8 shadow-xl border border-roseGold-200 mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="countdown-heading" class="text-xs sm:text-sm uppercase tracking-widest font-semibold text-roseGold-700 flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-roseGold-500"></i>
+                        Counting Down To Your Special Day
+                    </span>
+                    <button onclick="promptEditDate()" class="text-xs text-roseGold-600 hover:text-wine underline font-medium" title="Adjust birthday date">
+                        Change Date
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                    <div class="bg-white/80 rounded-2xl p-2.5 sm:p-4 border border-roseGold-100 shadow-sm">
+                        <div id="days" class="text-2xl sm:text-4xl font-serif font-bold text-wine">00</div>
+                        <div class="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider mt-1">Days</div>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-2.5 sm:p-4 border border-roseGold-100 shadow-sm">
+                        <div id="hours" class="text-2xl sm:text-4xl font-serif font-bold text-wine">00</div>
+                        <div class="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider mt-1">Hours</div>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-2.5 sm:p-4 border border-roseGold-100 shadow-sm">
+                        <div id="minutes" class="text-2xl sm:text-4xl font-serif font-bold text-wine">00</div>
+                        <div class="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider mt-1">Minutes</div>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-2.5 sm:p-4 border border-roseGold-100 shadow-sm">
+                        <div id="seconds" class="text-2xl sm:text-4xl font-serif font-bold text-wine">00</div>
+                        <div class="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider mt-1">Seconds</div>
+                    </div>
+                </div>
+
+                <!-- Live countdown banner message -->
+                <p id="countdown-submsg" class="text-xs text-roseGold-700/80 italic mt-4 text-center">
+                    Every beat of my heart counts down until we celebrate you! ✨
+                </p>
+            </div>
+
+            <!-- Quick Action CTA -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#memories" class="px-6 py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                    <i data-lucide="images" class="w-4 h-4"></i>
+                    <span>Relive Our Memories</span>
+                </a>
+                <button onclick="triggerConfettiExplosion()" class="px-6 py-3 rounded-full bg-white text-roseGold-700 font-medium border border-roseGold-300 hover:bg-roseGold-50 shadow hover:shadow-md hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                    <i data-lucide="party-popper" class="w-4 h-4 text-roseGold-500"></i>
+                    <span>Shower With Confetti</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="memories" class="py-16 sm:py-24 px-4 sm:px-6 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-roseGold-600">Chapter Of Us</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-wine mt-2 font-bold">Moments Frozen In Time</h2>
+                    <p class="text-stone-600 max-w-lg mx-auto text-sm sm:text-base mt-2 font-serif italic">
+                        Every picture tells our story — filled with your sparkling laughter, our street food dates, and endless romance.
+                    </p>
+                </div>
+
+                <!-- Interactive Slideshow Component -->
+                <div class="relative glass-card rounded-3xl p-3 sm:p-5 shadow-2xl border border-roseGold-200 overflow-hidden">
+                    <!-- Carousel Container -->
+                    <div id="carousel-viewport" class="relative w-full aspect-[4/5] sm:aspect-[16/10] max-h-[620px] rounded-2xl overflow-hidden bg-stone-900 group">
+                        
+                        <!-- Image Container with fallback -->
+                        <img id="carousel-img" src="PXL_20261002_092805851.jpg" alt="Romantic Memory" 
+                             class="w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80';">
+
+                        <!-- Romantic Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
+                            <span id="carousel-tag" class="text-xs uppercase tracking-widest text-roseGold-300 font-semibold mb-1">Memory #1</span>
+                            <h3 id="carousel-title" class="font-serif text-2xl sm:text-4xl text-white font-bold mb-2">Our Brightest Smiles</h3>
+                            <p id="carousel-desc" class="text-rose-100/90 text-sm sm:text-base max-w-xl font-light leading-relaxed">
+                                Standing together with the people we cherish, your radiant smile will always be the most stunning sight in any room.
+                            </p>
+                        </div>
+
+                        <!-- Previous / Next Navigation Arrows -->
+                        <button onclick="prevSlide()" aria-label="Previous Memory" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition opacity-90 hover:scale-110 active:scale-95 focus:outline-none">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <button onclick="nextSlide()" aria-label="Next Memory" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white flex items-center justify-center transition opacity-90 hover:scale-110 active:scale-95 focus:outline-none">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
+
+                        <!-- Autoplay toggle badge -->
+                        <button id="autoplay-toggle" onclick="toggleAutoPlay()" class="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-xs flex items-center gap-1.5 transition">
+                            <i data-lucide="pause" id="autoplay-icon" class="w-3.5 h-3.5"></i>
+                            <span id="autoplay-label">Auto: On</span>
+                        </button>
+                    </div>
+
+                    <!-- Slide Indicator Thumbnails / Dots -->
+                    <div class="flex items-center justify-center gap-1.5 sm:gap-2 mt-4 py-2 overflow-x-auto px-2" id="carousel-dots">
+                        <!-- Dots populated via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reasons" class="py-16 sm:py-24 px-4 sm:px-6 bg-gradient-to-b from-transparent via-roseGold-50/60 to-transparent">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12 sm:mb-16">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-roseGold-600">Straight From My Heart</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-wine mt-2 font-bold">Why I Fall In Love With You Daily</h2>
+                    <p class="text-stone-600 text-sm sm:text-base max-w-lg mx-auto mt-2 italic font-serif">
+                        Click any love card to reveal the special little things about you that make my world spin.
+                    </p>
+                </div>
+
+                <!-- Grid of Interactive Flip Love Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="sun" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">Your Pure Radiant Joy</h3>
+                                    <p class="text-xs text-stone-500 mt-2">Whether eating spicy golgappas or joking late at night, your happiness lights up the darkest day.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "When you smile with that cute crinkle of your nose, I forget all stress and worries. Your laughter is my favorite song."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="compass" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">My Anchor & Safe Haven</h3>
+                                    <p class="text-xs text-stone-500 mt-2">No matter where life takes us, in your warm embrace is the only place I truly feel complete.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "You are my peaceful harbor. In a chaotic universe, your hug restores my soul and reassures me that we can conquer anything together."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="coffee" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">Our Quiet Everyday Magic</h3>
+                                    <p class="text-xs text-stone-500 mt-2">Sipping morning tea, cozy evenings on the couch, laughing at our own silly jokes.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "The greatest luxury of my life is sitting beside you doing nothing at all, because being with you is paradise."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="sparkle" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">Your Heart of Pure Gold</h3>
+                                    <p class="text-xs text-stone-500 mt-2">The endless kindness, compassion, and care you shower upon everyone around you.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "You inspire me to be a kinder, better human being every day. Having your heart by my side is my life's greatest honor."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="gem" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">Breathtaking Elegance</h3>
+                                    <p class="text-xs text-stone-500 mt-2">Dressed up in vibrant royal blue or relaxed at home, you take my breath away every single day.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "I look at you and still get the exact same butterflies I felt when we first met. You are effortless grace and beauty."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="flip-card perspective-1000 h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-md hover:shadow-xl transition">
+                            <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-roseGold-200">
+                                <div>
+                                    <div class="w-12 h-12 rounded-2xl bg-roseGold-100 text-roseGold-600 flex items-center justify-center mb-4">
+                                        <i data-lucide="infinity" class="w-6 h-6"></i>
+                                    </div>
+                                    <h3 class="font-serif text-xl font-bold text-wine">Partners For Eternity</h3>
+                                    <p class="text-xs text-stone-500 mt-2">Not just husband and wife, but partners in crime, best companions, and soulmates forever.</p>
+                                </div>
+                                <div class="text-xs font-semibold text-roseGold-600 flex items-center gap-1">
+                                    <span>Tap to read love letter</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-roseGold-700 to-wine rounded-2xl p-6 text-white flex flex-col justify-between">
+                                <div>
+                                    <i data-lucide="heart" class="w-6 h-6 fill-roseGold-300 text-roseGold-300 mb-3"></i>
+                                    <p class="font-serif italic text-sm leading-relaxed">
+                                        "I promise to love you, cherish you, protect your dreams, and make you laugh through all our tomorrows. Happy Birthday, my whole world."
+                                    </p>
+                                </div>
+                                <span class="text-[11px] text-rose-200 uppercase tracking-widest font-mono">Tap to flip back</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 sm:py-24 px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-roseGold-600">The Chapters We Write</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-wine mt-2 font-bold">Our Love Story</h2>
+                    <p class="text-stone-600 text-sm sm:text-base max-w-md mx-auto mt-2 italic font-serif">
+                        Every milestone with you has been sweeter than any dream.
+                    </p>
+                </div>
+
+                <div class="relative border-l-2 border-roseGold-300 ml-4 sm:ml-32 space-y-12">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="relative pl-6 sm:pl-10">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-500 border-4 border-white shadow"></div>
+                        <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">The First Spark</span>
+                        <h4 class="font-serif text-xl font-bold text-stone-800 mt-0.5">When My World Stopped</h4>
+                        <p class="text-stone-600 text-sm mt-1 leading-relaxed">
+                            The very moment your eyes met mine. I never knew that one glance could change the entire direction of my life forever.
+                        </p>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative pl-6 sm:pl-10">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-500 border-4 border-white shadow"></div>
+                        <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">Unforgettable Dates</span>
+                        <h4 class="font-serif text-xl font-bold text-stone-800 mt-0.5">Food, Laughs & Midnight Walks</h4>
+                        <p class="text-stone-600 text-sm mt-1 leading-relaxed">
+                            From street carts under buzzing city lights to rooftop celebrations where you looked like an absolute goddess.
+                        </p>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative pl-6 sm:pl-10">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-roseGold-600 border-4 border-white shadow"></div>
+                        <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-wider">Today & Forever</span>
+                        <h4 class="font-serif text-xl font-bold text-stone-800 mt-0.5">Celebrating You, My Queen</h4>
+                        <p class="text-stone-600 text-sm mt-1 leading-relaxed">
+                            Today is dedicated entirely to your smile, your dreams, and reminding you that you are deeply, unconditionally loved.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="video-tribute" class="py-16 sm:py-24 px-4 sm:px-6 bg-gradient-to-b from-roseGold-100/50 via-softPink to-white">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-roseGold-600">Cinematic Love</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-wine mt-2 font-bold">Our Birthday Video Tribute</h2>
+                    <p class="text-stone-600 text-sm sm:text-base max-w-lg mx-auto mt-2 italic font-serif">
+                        A tribute video dedicated to the queen of my life. Drop your video file right into this frame!
+                    </p>
+                </div>
+
+                <!-- Video Card Frame -->
+                <div class="glass-card rounded-3xl p-4 sm:p-7 shadow-2xl border border-roseGold-300">
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-stone-900 shadow-inner flex items-center justify-center">
+                        
+                        <!-- Primary HTML5 Video Tag (easily replaceable with user's video.mp4 or YouTube embed) -->
+                        <video id="tribute-video" class="w-full h-full object-cover hidden" controls playsinline>
+                            <source src="birthday_tribute.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+
+                        <!-- Fallback / Interactive Video Placeholder Poster -->
+                        <div id="video-placeholder" class="text-center p-6 sm:p-10 flex flex-col items-center justify-center text-white">
+                            <div class="w-20 h-20 rounded-full bg-roseGold-500/30 border border-roseGold-400/50 flex items-center justify-center mb-5 backdrop-blur-sm animate-pulseSlow cursor-pointer" onclick="openVideoFileSelector()">
+                                <i data-lucide="play" class="w-8 h-8 text-roseGold-200 fill-roseGold-200 translate-x-0.5"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl sm:text-3xl font-bold mb-2">Our Video Premiere</h3>
+                            <p class="text-stone-300 text-xs sm:text-sm max-w-md leading-relaxed mb-6 font-light">
+                                To play your video, place a file named <code class="bg-black/50 px-2 py-0.5 rounded text-roseGold-300 font-mono">birthday_tribute.mp4</code> in the repository, or load one from your device right now!
+                            </p>
+                            <div class="flex flex-wrap gap-3 justify-center">
+                                <label class="px-5 py-2.5 rounded-full bg-roseGold-500 hover:bg-roseGold-600 text-white text-xs sm:text-sm font-medium transition cursor-pointer flex items-center gap-2 shadow-lg">
+                                    <i data-lucide="upload" class="w-4 h-4"></i>
+                                    <span>Select Local Video</span>
+                                    <input type="file" id="local-video-input" accept="video/*" class="hidden" onchange="loadLocalVideo(event)">
+                                </label>
+                                <button onclick="embedYoutubeVideoPrompt()" class="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-medium transition flex items-center gap-2">
+                                    <i data-lucide="youtube" class="w-4 h-4 text-red-400"></i>
+                                    <span>Paste YouTube Link</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- YouTube Iframe Container (Dynamically rendered) -->
+                        <div id="youtube-container" class="w-full h-full hidden"></div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between mt-5 gap-3 pt-3 border-t border-roseGold-100">
+                        <div class="flex items-center gap-2 text-roseGold-800 text-xs sm:text-sm font-medium">
+                            <i data-lucide="heart" class="w-4 h-4 fill-roseGold-500 text-roseGold-500"></i>
+                            <span>"To my soulmate, my best friend, and my endless love."</span>
+                        </div>
+                        <button onclick="triggerConfettiExplosion()" class="text-xs text-wine font-semibold hover:text-roseGold-600 transition flex items-center gap-1.5">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-roseGold-500"></i>
+                            Send Hearts & Wishes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 sm:py-20 px-4 sm:px-6 text-center">
+            <div class="max-w-2xl mx-auto glass-card rounded-3xl p-8 sm:p-12 shadow-xl border border-roseGold-200 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-roseGold-200/50 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="w-16 h-16 rounded-full bg-roseGold-100 text-roseGold-600 flex items-center justify-center mx-auto mb-6 shadow-inner animate-bounce">
+                    <i data-lucide="gift" class="w-8 h-8"></i>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl text-wine font-bold mb-3">One More Birthday Surprise!</h2>
+                <p class="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 font-serif italic">
+                    I prepared a secret letter just for you. Click below to unwrap your special birthday gift card.
+                </p>
+                <button onclick="triggerSurpriseModal()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-roseGold-500 via-roseGold-600 to-wine text-white font-medium text-base shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition flex items-center gap-2 mx-auto">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-champagne"></i>
+                    <span>Open My Birthday Letter</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- How to host on GitHub info drawer/modal -->
+    <div id="github-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-xl w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-roseGold-300 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleGithubModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-roseGold-100 text-roseGold-700 hover:bg-roseGold-200 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <i data-lucide="github" class="w-7 h-7 text-wine"></i>
+                <h3 class="font-serif text-2xl font-bold text-wine">How to Host on GitHub Pages</h3>
+            </div>
+            <div class="text-xs sm:text-sm text-stone-700 space-y-3 leading-relaxed">
+                <p>Follow these 3 quick steps to give your wife her custom live URL (e.g., <span class="font-mono bg-roseGold-100 px-1 py-0.5 rounded text-roseGold-800">yourname.github.io/happy-birthday</span>):</p>
+                <ol class="list-decimal pl-5 space-y-2 text-stone-600 font-normal">
+                    <li><strong>Create a GitHub Repository:</strong> Sign in to GitHub, click <em>New Repository</em>, name it (e.g. <code class="text-roseGold-700">happy-birthday</code>) and set it to <strong>Public</strong>.</li>
+                    <li><strong>Upload Your Files:</strong> Upload this <code class="text-roseGold-700">index.html</code> file along with the photo files (<code class="text-roseGold-700">PXL_20261002_092805851.jpg</code>, etc.) into the repository's root folder.</li>
+                    <li><strong>Turn on GitHub Pages:</strong> Go to <strong>Settings</strong> &rarr; <strong>Pages</strong> (on left sidebar) &rarr; under <em>Branch</em> select <strong>main</strong> (or master) and root (<code class="text-roseGold-700">/root</code>) &rarr; Click <strong>Save</strong>.</li>
+                </ol>
+                <p class="text-roseGold-800 font-medium pt-2">Within 1-2 minutes, GitHub will publish your live romantic website link to share with her!</p>
+            </div>
+            <button onclick="toggleGithubModal()" class="mt-6 w-full py-2.5 rounded-full bg-wine text-white font-medium text-xs sm:text-sm hover:opacity-90 transition">
+                Got It, Ready to Deploy!
+            </button>
+        </div>
+    </div>
+
+    <!-- Surprise Love Letter Modal -->
+    <div id="surprise-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-roseGold-300 relative text-center animate-pulseSlow">
+            <button onclick="closeSurpriseModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-roseGold-100 text-roseGold-700 hover:bg-roseGold-200 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="w-16 h-16 rounded-full bg-roseGold-200 text-roseGold-700 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="heart-handshake" class="w-8 h-8 fill-roseGold-600 text-roseGold-600"></i>
+            </div>
+            <span class="text-xs uppercase font-semibold text-roseGold-600 tracking-widest">My Personal Vow</span>
+            <h3 class="font-script text-4xl sm:text-5xl text-wine mt-2 mb-4">Forever My Only One</h3>
+            <p class="font-serif italic text-stone-700 text-sm sm:text-base leading-relaxed mb-6">
+                "Happy Birthday, my beautiful wife. Meeting you was fate, becoming your husband was a dream, and loving you through every season is the joy of my existence. May your year ahead be as breathtaking, loving, and radiant as you are."
+            </p>
+            <div class="p-4 rounded-2xl bg-roseGold-100/70 border border-roseGold-300 mb-6 text-left">
+                <div class="flex items-center gap-2 text-wine font-semibold text-xs uppercase mb-1">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-roseGold-600"></i>
+                    <span>Husband's Birthday Voucher:</span>
+                </div>
+                <p class="text-xs text-stone-600">
+                    Redeemable anytime for: 100 Unlimited Hugs, Breakfast in Bed, Your Favorite Street Food date, and unconditional pampering! ❤️
+                </p>
+            </div>
+            <button onclick="closeSurpriseModal(); triggerConfettiExplosion(); playSweetChime();" class="w-full py-3 rounded-full bg-gradient-to-r from-roseGold-600 to-wine text-white font-medium hover:shadow-lg transition">
+                Seal With A Kiss 💋
+            </button>
+        </div>
+    </div>
+
+    <footer class="pt-16 pb-12 px-4 sm:px-6 border-t border-roseGold-200 text-center relative z-20">
+        <div class="max-w-4xl mx-auto flex flex-col items-center">
+            <div class="font-script text-4xl text-wine mb-2">Always & Forever</div>
+            <p class="font-serif italic text-sm text-stone-600 max-w-sm mb-6">
+                Created with all my heart for the most incredible woman in the world.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-roseGold-700 font-medium mb-8">
+                <button onclick="toggleGithubModal()" class="flex items-center gap-1.5 hover:text-wine transition">
+                    <i data-lucide="help-circle" class="w-4 h-4"></i>
+                    <span>GitHub Hosting Instructions</span>
+                </button>
+                <span>&bull;</span>
+                <button onclick="triggerConfettiExplosion()" class="hover:text-wine transition">Confetti Burst</button>
+            </div>
+            <div class="text-[11px] text-stone-400">
+                Crafted for your GitHub Pages tribute &bull; Made with unconditional love.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        /* ==========================================================
+           1. PHOTO MEMORIES CAROUSEL DATA (Matching uploaded files)
+           ========================================================== */
+        const photoMemories = [
+            {
+                url: "PXL_20261002_092805851.jpg",
+                title: "Family, Laughter & Your Bright Smile",
+                desc: "Every moment in your company fills the room with warmth and joyful energy.",
+                tag: "Sweet Memories"
+            },
+            {
+                url: "PXL_20260929_153622750.jpg",
+                title: "Our Cozy Everyday Comfort",
+                desc: "Relaxing at home with tea and warm chats — this simple peace with you is my happy place.",
+                tag: "Pure Harmony"
+            },
+            {
+                url: "PXL_20260919_150927815.jpg",
+                title: "Evening Strolls & Playful Teasing",
+                desc: "Your infectious cheeky smile never fails to make me burst out laughing.",
+                tag: "Partners in Fun"
+            },
+            {
+                url: "PXL_20260916_111926818.jpg",
+                title: "Street Food Delights & Golgappas",
+                desc: "Nothing brings that sparkle to your eyes faster than delicious treats shared together!",
+                tag: "Foodie Lovers"
+            },
+            {
+                url: "PXL_20260816_143610542.jpg",
+                title: "Our Mischievous Spark",
+                desc: "Never lose that playful wink and pout. You make every ordinary day feel like an adventure.",
+                tag: "Endless Fun"
+            },
+            {
+                url: "PXL_20260815_111818467~2.jpg",
+                title: "Glow That Outshines Everything",
+                desc: "That radiant floral dress and your sparkling eyes — I'm the luckiest man alive.",
+                tag: "My Sweetheart"
+            },
+            {
+                url: "PXL_20260801_171528292.jpg",
+                title: "City Lights & Breathtaking Beauty",
+                desc: "Against the skyline in royal sapphire blue, you looked like a living dream.",
+                tag: "My Goddess"
+            },
+            {
+                url: "PXL_20260801_150427256.jpg",
+                title: "A Night To Celebrate You",
+                desc: "Dressed up side by side, holding you close. Forever grateful for you.",
+                tag: "Celebration Night"
+            },
+            {
+                url: "PXL_20260731_183107629.jpg",
+                title: "Handmade Flowers For My Blossom",
+                desc: "Flowers will wither, but the love blooming in my heart for you grows deeper every day.",
+                tag: "True Romance"
+            },
+            {
+                url: "PXL_20260719_161943776.PORTRAIT.ORIGINAL.jpg",
+                title: "Side By Side, Always Together",
+                desc: "Stepping into tomorrow holding hands. There is nowhere else I'd rather be.",
+                tag: "Always & Forever"
+            }
+        ];
+
+        let currentSlide = 0;
+        let isAutoPlaying = true;
+        let carouselInterval = null;
+
+        const imgElement = document.getElementById('carousel-img');
+        const titleElement = document.getElementById('carousel-title');
+        const descElement = document.getElementById('carousel-desc');
+        const tagElement = document.getElementById('carousel-tag');
+        const dotsContainer = document.getElementById('carousel-dots');
+
+        // Build dots for slides
+        function renderDots() {
+            dotsContainer.innerHTML = '';
+            photoMemories.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === currentSlide ? 'w-8 bg-roseGold-600' : 'bg-roseGold-300 hover:bg-roseGold-400'
+                }`;
+                dot.onclick = () => {
+                    currentSlide = index;
+                    updateSlideDisplay();
+                };
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateSlideDisplay() {
+            imgElement.style.opacity = '0';
+            setTimeout(() => {
+                const item = photoMemories[currentSlide];
+                imgElement.src = item.url;
+                imgElement.alt = item.title;
+                titleElement.textContent = item.title;
+                descElement.textContent = item.desc;
+                tagElement.textContent = item.tag;
+                imgElement.style.opacity = '1';
+                renderDots();
+            }, 300);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % photoMemories.length;
+            updateSlideDisplay();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + photoMemories.length) % photoMemories.length;
+            updateSlideDisplay();
+        }
+
+        function toggleAutoPlay() {
+            isAutoPlaying = !isAutoPlaying;
+            const label = document.getElementById('autoplay-label');
+            const icon = document.getElementById('autoplay-icon');
+            if (isAutoPlaying) {
+                label.textContent = "Auto: On";
+                startCarouselInterval();
+                icon.setAttribute('data-lucide', 'pause');
+            } else {
+                label.textContent = "Auto: Off";
+                clearInterval(carouselInterval);
+                icon.setAttribute('data-lucide', 'play');
+            }
+            lucide.createIcons();
+        }
+
+        function startCarouselInterval() {
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                if (isAutoPlaying) {
+                    nextSlide();
+                }
+            }, 5500);
+        }
+
+        // Initialize Carousel
+        renderDots();
+        startCarouselInterval();
+
+        /* ==========================================================
+           2. BIRTHDAY COUNTDOWN TIMER WITH LOCALSTORAGE PERSISTENCE
+           ========================================================== */
+        // Default target birthday: 10 days ahead or editable by user
+        let storedDate = localStorage.getItem('wife_birthday_date');
+        let targetBirthday = storedDate ? new Date(storedDate) : new Date(Date.now() + 5 * 24 * 60 * 60 * 1000);
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetBirthday.getTime() - now;
+
+            if (distance < 0) {
+                // Birthday is here!
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+                document.getElementById('countdown-heading').innerHTML = "🎉 Today Is Your Special Day, Queen! 🎉";
+                document.getElementById('countdown-submsg').innerText = "Happy Birthday! Today is all about celebrating you! 💖";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        function promptEditDate() {
+            // Using in-page custom date prompt to avoid alert/confirm
+            const customDateInput = prompt("Enter birthday date (YYYY-MM-DD):", targetBirthday.toISOString().split('T')[0]);
+            if (customDateInput) {
+                const parsed = new Date(customDateInput + "T00:00:00");
+                if (!isNaN(parsed.getTime())) {
+                    targetBirthday = parsed;
+                    localStorage.setItem('wife_birthday_date', parsed.toISOString());
+                    updateCountdown();
+                    triggerConfettiExplosion();
+                }
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* ==========================================================
+           3. WEB AUDIO API SYNTHESIZER (Romantic Melody)
+           ========================================================== */
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let melodyTimeout = null;
+
+        // Romantic pentatonic acoustic-like melody notes (frequencies in Hz)
+        const romanticNotes = [
+            261.63, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63, // C4, E4, G4, A4, C5...
+            293.66, 349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23, // D4, F4, A4, C5, D5...
+            329.63, 392.00, 493.88, 523.25, 659.25, 523.25, 493.88, 392.00  // E4, G4, B4, C5, E5...
+        ];
+        let noteIndex = 0;
+
+        function playRomanticChimeNote(freq, duration = 0.9) {
+            if (!audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Smooth bell/music box envelope
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.error("Audio note error:", e);
+            }
+        }
+
+        function playSweetChime() {
+            initAudio();
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                setTimeout(() => playRomanticChimeNote(freq, 1.2), i * 160);
+            });
+        }
+
+        function scheduleMelodyLoop() {
+            if (!isMusicPlaying) return;
+            const freq = romanticNotes[noteIndex % romanticNotes.length];
+            playRomanticChimeNote(freq, 1.1);
+            noteIndex++;
+
+            // Animate visualizer bars
+            animateVisualizer();
+
+            melodyTimeout = setTimeout(scheduleMelodyLoop, 550);
+        }
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        const audioToggleBtn = document.getElementById('audio-toggle-btn');
+        const audioStatusText = document.getElementById('audio-status-text');
+        const musicIcon = document.getElementById('music-icon');
+        const visualizerBars = document.getElementById('visualizer-bars');
+
+        audioToggleBtn.addEventListener('click', () => {
+            initAudio();
+            isMusicPlaying = !isMusicPlaying;
+
+            if (isMusicPlaying) {
+                audioStatusText.textContent = "Playing Melody 🎶";
+                musicIcon.setAttribute('data-lucide', 'volume-2');
+                visualizerBars.classList.remove('opacity-40');
+                scheduleMelodyLoop();
+            } else {
+                audioStatusText.textContent = "Tap to play tune 🎵";
+                musicIcon.setAttribute('data-lucide', 'music');
+                visualizerBars.classList.add('opacity-40');
+                clearTimeout(melodyTimeout);
+            }
+            lucide.createIcons();
+        });
+
+        function animateVisualizer() {
+            const bars = visualizerBars.children;
+            for (let i = 0; i < bars.length; i++) {
+                const randomHeight = Math.floor(Math.random() * 16) + 4;
+                bars[i].style.height = `${randomHeight}px`;
+            }
+        }
+
+        /* ==========================================================
+           4. FLOATING PETALS & HEARTS CANVAS ANIMATION
+           ========================================================== */
+        const canvas = document.getElementById('hearts-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 14 + 10;
+                this.speedY = Math.random() * 1.5 + 0.6;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.opacity = Math.random() * 0.45 + 0.25;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.03;
+                this.isHeart = Math.random() > 0.4;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.4;
+                this.rotation += this.rotationSpeed;
+                if (this.y > canvas.height + 30) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                
+                if (this.isHeart) {
+                    ctx.fillStyle = '#e48a9b';
+                    ctx.beginPath();
+                    const d = this.size / 2;
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-d / 2, -d / 2, -d, d / 3, 0, d);
+                    ctx.bezierCurveTo(d, d / 3, d / 2, -d / 2, 0, 0);
+                    ctx.fill();
+                } else {
+                    // Rose Petal shape
+                    ctx.fillStyle = '#f0b7c0';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size * 0.6, this.size * 0.35, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        // Initialize particles
+        const particleCount = window.innerWidth < 640 ? 18 : 35;
+        for (let i = 0; i < particleCount; i++) {
+            const p = new Particle();
+            p.y = Math.random() * canvas.height; // distribute initially
+            particles.push(p);
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* ==========================================================
+           5. INTERACTIVE CONFETTI & CELEBRATION EFFECTS
+           ========================================================== */
+        function triggerConfettiExplosion() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#e48a9b', '#d56077', '#F7E7CE', '#a03148']
+                });
+            }
+        }
+
+        /* ==========================================================
+           6. VIDEO PLAYER & FILE HANDLING
+           ========================================================== */
+        const videoElement = document.getElementById('tribute-video');
+        const videoPlaceholder = document.getElementById('video-placeholder');
+        const youtubeContainer = document.getElementById('youtube-container');
+
+        function openVideoFileSelector() {
+            document.getElementById('local-video-input').click();
+        }
+
+        function loadLocalVideo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                videoElement.src = fileURL;
+                videoElement.classList.remove('hidden');
+                videoPlaceholder.classList.add('hidden');
+                youtubeContainer.classList.add('hidden');
+                videoElement.play();
+                triggerConfettiExplosion();
+            }
+        }
+
+        function embedYoutubeVideoPrompt() {
+            const url = prompt("Enter YouTube Video URL or Video ID (e.g., https://youtu.be/xxxx):");
+            if (url) {
+                let videoId = "";
+                if (url.includes("v=")) {
+                    videoId = url.split("v=")[1].split("&")[0];
+                } else if (url.includes("youtu.be/")) {
+                    videoId = url.split("youtu.be/")[1].split("?")[0];
+                } else {
+                    videoId = url.trim();
+                }
+
+                if (videoId) {
+                    youtubeContainer.innerHTML = `<iframe class="w-full h-full rounded-2xl" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    youtubeContainer.classList.remove('hidden');
+                    videoPlaceholder.classList.add('hidden');
+                    videoElement.classList.add('hidden');
+                    triggerConfettiExplosion();
+                }
+            }
+        }
+
+        /* ==========================================================
+           7. MODAL CONTROLLERS
+           ========================================================== */
+        const surpriseModal = document.getElementById('surprise-modal');
+        const githubModal = document.getElementById('github-modal');
+
+        function triggerSurpriseModal() {
+            surpriseModal.classList.remove('hidden');
+            triggerConfettiExplosion();
+            playSweetChime();
+        }
+
+        function closeSurpriseModal() {
+            surpriseModal.classList.add('hidden');
+        }
+
+        function toggleGithubModal() {
+            githubModal.classList.toggle('hidden');
+        }
+
+        // Close on clicking outside modal
+        [surpriseModal, githubModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
