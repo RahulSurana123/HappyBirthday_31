@@ -32,7 +32,7 @@
                             800: '#862b3f',
                             900: '#722839',
                         },
-                        champagne: '#F7E7CE',
+                        champagne: '#F7E7CE',     
                         wine: '#561023',
                         softPink: '#FFF0F5'
                     },
@@ -1020,8 +1020,7 @@
         }
 
         function loadLocalVideo(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const file = "birthday_tribute.mp4";
             const url = URL.createObjectURL(file);
             const video = document.getElementById('tribute-video');
             const placeholder = document.getElementById('video-placeholder');
