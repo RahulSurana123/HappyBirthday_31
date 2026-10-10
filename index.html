@@ -518,31 +518,6 @@
                         <video id="tribute-video" class="w-full h-full object-cover hidden" controls playsinline preload="metadata" src="birthday_tribute.mp4">
                             Your browser does not support the video tag.
                         </video>
-
-                        <!-- Fallback / Interactive Video Placeholder Poster -->
-                        <div id="video-placeholder" class="text-center p-6 sm:p-10 flex flex-col items-center justify-center text-white">
-                            <div class="w-20 h-20 rounded-full bg-roseGold-500/30 border border-roseGold-400/50 flex items-center justify-center mb-5 backdrop-blur-sm animate-pulseSlow cursor-pointer" onclick="playRomanticChimeNote()">
-                                <i data-lucide="play" class="w-8 h-8 text-roseGold-200 fill-roseGold-200 translate-x-0.5"></i>
-                            </div>
-                            <h3 class="font-serif text-2xl sm:text-3xl font-bold mb-2">Our Video Premiere</h3>
-                            <p class="text-stone-300 text-xs sm:text-sm max-w-md leading-relaxed mb-6 font-light">
-                                Your tribute video is already loaded from <code class="bg-black/50 px-2 py-0.5 rounded text-roseGold-300 font-mono">birthday_tribute.mp4</code>.
-                            </p>
-                            <div class="flex flex-wrap gap-3 justify-center">
-                                <label class="px-5 py-2.5 rounded-full bg-roseGold-500 hover:bg-roseGold-600 text-white text-xs sm:text-sm font-medium transition cursor-pointer flex items-center gap-2">
-                                    <i data-lucide="upload" class="w-4 h-4"></i>
-                                    <span>Select Local Video</span>
-                                    <input type="file" id="local-video-input" accept="video/*" class="hidden" onchange="loadLocalVideo(event)">
-                                </label>
-                                <button onclick="embedYoutubeVideoPrompt()" class="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur text-white text-xs sm:text-sm font-medium transition flex items-center gap-2">
-                                    <i data-lucide="youtube" class="w-4 h-4 text-red-400"></i>
-                                    <span>Paste YouTube Link</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- YouTube Iframe Container (Dynamically rendered) -->
-                        <div id="youtube-container" class="w-full h-full hidden"></div>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center justify-between mt-5 gap-3 pt-3 border-t border-roseGold-100">
