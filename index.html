@@ -663,16 +663,19 @@
                     tributeVid.play();
                 });
             }
+
+            // 2. Function to unmute on first tap, click, or scroll gesture
+            const unmuteInstantly = () => {
+                video.muted = false;
+                // If playback was paused or stalled, kickstart it
+                if (video.paused) {
+                    video.play().catch(() => {});
+                }
         
-            // Unmute as soon as the user touches or clicks anywhere on the page
-            const enableSoundOnInteraction = () => {
-                tributeVid.muted = false;
-                window.removeEventListener('click', enableSoundOnInteraction);
-                window.removeEventListener('touchstart', enableSoundOnInteraction);
-            };
-        
-            window.addEventListener('click', enableSoundOnInteraction, { once: true });
-            window.addEventListener('touchstart', enableSoundOnInteraction, { once: true });
+                // Clean up listeners immediately after first interaction
+                ['click', 'touchstart', 'scroll', 'keydown'].forEach(eventType => {
+                    window.removeEventListener(eventType, unmuteInstantly);
+                });
         });
 
         /* ==========================================================
