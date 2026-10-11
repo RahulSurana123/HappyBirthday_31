@@ -655,6 +655,11 @@
 
             window.addEventListener('click', enableSoundOnInteraction, { once: true });
             window.addEventListener('touchstart', enableSoundOnInteraction, { once: true });
+
+            audioStatusText.textContent = "Playing Melody 🎶";
+                musicIcon.setAttribute('data-lucide', 'volume-2');
+                visualizerBars.classList.remove('opacity-40');
+                scheduleMelodyLoop();
         });
 
         /* ==========================================================
