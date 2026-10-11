@@ -656,10 +656,21 @@
             window.addEventListener('click', enableSoundOnInteraction, { once: true });
             window.addEventListener('touchstart', enableSoundOnInteraction, { once: true });
 
-            audioStatusText.textContent = "Playing Melody 🎶";
+            initAudio();
+            isMusicPlaying = !isMusicPlaying;
+
+            if (isMusicPlaying) {
+                audioStatusText.textContent = "Playing Melody 🎶";
                 musicIcon.setAttribute('data-lucide', 'volume-2');
                 visualizerBars.classList.remove('opacity-40');
                 scheduleMelodyLoop();
+            } else {
+                audioStatusText.textContent = "Tap to play tune 🎵";
+                musicIcon.setAttribute('data-lucide', 'music');
+                visualizerBars.classList.add('opacity-40');
+                clearTimeout(melodyTimeout);
+            }
+            lucide.createIcons();
         });
 
         /* ==========================================================
