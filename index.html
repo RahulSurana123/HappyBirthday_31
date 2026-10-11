@@ -676,6 +676,10 @@
                 ['click', 'touchstart', 'scroll', 'keydown'].forEach(eventType => {
                     window.removeEventListener(eventType, unmuteInstantly);
                 });
+            // Listen across the window for any initial touch/click/interaction
+            ['click', 'touchstart', 'scroll', 'keydown'].forEach(eventType => {
+                window.addEventListener(eventType, unmuteInstantly, { passive: true });
+            });
         });
 
         /* ==========================================================
