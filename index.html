@@ -897,10 +897,9 @@
         function scheduleMelodyLoop() {
             if (!isMusicPlaying) return;
             const freq = romanticNotes[noteIndex % romanticNotes.length];
-            playRomanticChimeNote(freq, 1.1);
+            playRomanticChimeNote(freq, 1);
             noteIndex++;
             animateVisualizer();
-            melodyTimeout = setTimeout(scheduleMelodyLoop, 550);
         }
 
         function initAudio() {
