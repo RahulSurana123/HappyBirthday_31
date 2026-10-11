@@ -892,7 +892,7 @@
         function playSweetChime() {
             initAudio();
             [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-                setTimeout(() => playRomanticChimeNote(freq, 1.2), i * 160);
+                playRomanticChimeNote(freq, 1);
             });
         }
 
